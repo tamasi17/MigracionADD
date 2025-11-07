@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LoggerConfig status="TRACE">
+    <!-- Pathname for log file -->
+    <FilePath>logs/</FilePath>
+    <FileName>errors.log</FileName>
+
+    <!-- Maximum size before rotation in bytes -->
+    <MaxFileSize>500</MaxFileSize>
+
+    <!-- Formatting: FORMATTING IN THE LOGGER FOR NOW -->
+    <Pattern>%d [%s] %m</Pattern> <!-- %d: datetime, %s: source, %m: message -->
+</LoggerConfig>
