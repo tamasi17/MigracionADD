@@ -1,0 +1,33 @@
+package main.java.v1;
+
+
+import log4Mats.LogLevel;
+import log4Mats.LogManager;
+import log4Mats.Logger;
+import main.java.logging.LoggerProvider;
+
+import java.io.File;
+
+public class Main_v1 {
+
+        static final Logger LOGGER = LoggerProvider.getLogger();
+
+    public static void main(String[] args) {
+
+
+        /*
+         Primero drop todas las tablas para empezar de cero
+         DDL: Crear modelos bases de datos prac2 y prac2migra
+         Carga masiva datos en prac2
+         DML: Logica de negocio cambia datos
+         Migracion datos prac2 a prac2 migra
+         Resultado en un fichero.
+         */
+
+        LOGGER.setLogToConsole(true);
+        LOGGER.log(LogLevel.DEBUG, "Test");
+
+
+
+    }
+}
