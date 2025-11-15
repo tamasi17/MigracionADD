@@ -1,0 +1,15 @@
+package main.java.dao;
+
+import java.util.List;
+
+public interface Dao<T> {
+
+    T get(int id);
+    void insert(T entity);
+    void insert(List<T> entity);
+    void update(T entity);
+    void deleteById (int id);
+    boolean exists(T entity);
+    List<T> findAll();
+    List<T> findByAttribute(T filtro);
+}

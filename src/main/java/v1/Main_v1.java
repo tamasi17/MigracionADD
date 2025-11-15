@@ -5,8 +5,10 @@ import log4Mats.LogLevel;
 import log4Mats.LogManager;
 import log4Mats.Logger;
 import main.java.logging.LoggerProvider;
+import main.java.utils.DatabaseSetup;
 
 import java.io.File;
+import java.sql.SQLException;
 
 public class Main_v1 {
 
@@ -25,8 +27,13 @@ public class Main_v1 {
          */
 
         LOGGER.setLogToConsole(true);
-        LOGGER.log(LogLevel.DEBUG, "Test");
 
+        try {
+            DatabaseSetup.crearTablaClientes();
+        } catch (SQLException sqle) {
+            LOGGER.error("Error generando la tabla clientes");
+            sqle.getLocalizedMessage();
+        }
 
 
     }

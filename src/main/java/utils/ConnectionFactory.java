@@ -9,11 +9,23 @@ import java.sql.SQLException;
 
 /**
  * Clase que devuelve una conexion con DriverManager o DataSource.
+ * @author mati
  */
 public class ConnectionFactory {
 
-    private static final String URL = "jdbc:mysql://localhost:3307/usuarios?useSSL=false&serverTimezone=UTC" +
+    // Original, puerto 3306 o 3307:
+    private static final String URL = "jdbc:mysql://localhost:3306/prac2?useSSL=false&serverTimezone=UTC" +
             "&allowPublicKeyRetrieval=true";
+//    private static final String URL = "jdbc:mysql://localhost:3307/prac2?useSSL=false&serverTimezone=UTC" +
+//            "&allowPublicKeyRetrieval=true";
+
+    // Migrada, puerto 3306 o 3307:
+    private static final String URL_MIGRA = "jdbc:mysql://localhost:3306/prac2migra?useSSL=false&serverTimezone=UTC" +
+            "&allowPublicKeyRetrieval=true";
+//    private static final String URL_MIGRA = "jdbc:mysql://localhost:3307/prac2migra?useSSL=false&serverTimezone=UTC" +
+//            "&allowPublicKeyRetrieval=true";
+
+
     private static final String USER = "root";
     private static final String PASS = "root";
 
@@ -31,12 +43,21 @@ public class ConnectionFactory {
         ds = new HikariDataSource(config);
     }
 
-    // Conexion con DriverManager
+    /**
+     * Metodo que devuelve una conexion con DriverManager
+     * Prestar atencion a url segun puerto.
+     * @return Connection
+     * @throws SQLException
+     */
     public static Connection getConnectionDriverM() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASS);
     }
 
-    // Conexion con DataSource
+    /**
+     * Metodo que devuelve una conexion con DataSource
+     * @return Connection
+     * @throws SQLException
+     */
     public static Connection getConnectionDS() throws SQLException {
         return ds.getConnection();
     }

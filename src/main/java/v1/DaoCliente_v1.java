@@ -1,7 +1,7 @@
 package main.java.v1;
 
 import log4Mats.LogLevel;
-import main.java.dao.DaoCliente;
+import main.java.dao.Dao;
 import main.java.models.Cliente;
 import main.java.utils.ConnectionFactory;
 
@@ -11,12 +11,13 @@ import java.util.List;
 
 import static main.java.logging.LoggerProvider.getLogger;
 
-public class DaoCliente_v1 implements DaoCliente {
+public class DaoCliente_v1 implements Dao<Cliente> {
 
     @Override
-    public Cliente get() {
+    public Cliente get(int id) {
         return null;
     }
+
 
     public void insert(Cliente c) {
 
@@ -45,6 +46,11 @@ public class DaoCliente_v1 implements DaoCliente {
             getLogger().log(LogLevel.ERROR, "Connection(DriverM) not established when inserting Cliente");
             System.err.println(sqle.getLocalizedMessage());
         }
+    }
+
+    @Override
+    public void insert(List<Cliente> entity) {
+
     }
 
     @Override
@@ -89,8 +95,9 @@ public class DaoCliente_v1 implements DaoCliente {
     }
 
     @Override
-    public List<Cliente> findByName(String nombre) {
+    public List<Cliente> findByAttribute(Cliente filtro) {
         return List.of();
     }
+
 
 }
