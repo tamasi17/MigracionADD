@@ -1,1 +1,13 @@
 [1] [2025-11-15_01-20-53_597] [INFO] [main.java.utils.DatabaseSetup.crearTablaClientes]: Tabla clientes creada correctamente
+[1] [2025-11-16_00-21-37_340] [INFO] [main.java.utils.DatabaseSetup.crearTablaClientes]: Tabla clientes creada correctamente
+[2] [2025-11-16_00-21-37_379] [ERROR] [main.java.v1.DaoCliente_v1.insertMany]: Connection(DM) not established when inserting Cliente list
+[3] [2025-11-16_00-21-37_384] [ERROR] [main.java.v1.DaoCliente_v1.insertOne]: Connection(DriverM) not established when inserting Cliente
+[1] [2025-11-16_00-24-12_896] [INFO] [main.java.utils.DatabaseSetup.crearTablaClientes]: Tabla clientes creada correctamente
+[2] [2025-11-16_00-24-12_932] [ERROR] [main.java.v1.DaoCliente_v1.insertMany]: Connection(DM) not established when inserting Cliente list
+[3] [2025-11-16_00-24-12_937] [ERROR] [main.java.v1.DaoCliente_v1.insertOne]: Connection(DriverM) not established when inserting Cliente
+[1] [2025-11-16_00-27-35_649] [INFO] [main.java.utils.DatabaseSetup.crearTablaClientes]: Tabla clientes creada correctamente
+[2] [2025-11-16_00-27-35_700] [ERROR] [main.java.v1.DaoCliente_v1.insertOne]: Connection(DriverM) not established when inserting Cliente
+[1] [2025-11-16_00-31-50_167] [INFO] [main.java.utils.DatabaseSetup.crearTablaClientes]: Tabla clientes creada correctamente
+[2] [2025-11-16_00-31-50_215] [ERROR] [main.java.v1.DaoCliente_v1.insertOne]: Connection(DriverM) not established when inserting Cliente
+[1] [2025-11-16_00-32-56_902] [INFO] [main.java.utils.DatabaseSetup.crearTablaClientes]: Tabla clientes creada correctamente
+[2] [2025-11-16_00-32-56_977] [ERROR] [main.java.v1.DaoCliente_v1.insertOne]: Connection(DriverM) not established when inserting Cliente

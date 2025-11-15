@@ -19,13 +19,15 @@ public class DatabaseSetup {
                 CREATE TABLE IF NOT EXISTS clientes (
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     nombre VARCHAR(100) NOT NULL,
+                    apellido1 VARCHAR(100) NOT NULL,
+                    apellido2 VARCHAR(100) NOT NULL,
                     dni INT NOT NULL UNIQUE,
                     telefono BIGINT,
                     activo BOOLEAN NOT NULL,
                     fecha_registro DATE
                 )
                 """;
-        try(Connection connection = ConnectionFactory.getConnectionDriverM()){
+        try(Connection connection = ConnectionFactory.getConnectionDmOriginal()){
 
             Statement st = connection.createStatement();
             st.execute(sql);
@@ -51,7 +53,7 @@ public class DatabaseSetup {
                     fecha_registro DATE
                 )
                 """;
-        try(Connection connection = ConnectionFactory.getConnectionDriverM()){
+        try(Connection connection = ConnectionFactory.getConnectionDmOriginal()){
 
             Statement st = connection.createStatement();
             st.execute(sql);

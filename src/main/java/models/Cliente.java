@@ -7,15 +7,19 @@ import java.util.Date;
 
 public class Cliente {
 
-    private int idCliente; // no migrar, dni sera key
+    private int idCliente;
     private String nombre;
+    private String apellido1;
+    private String apellido2; // no migrar
     private int dni;
-    private LocalDate fechaRegistro; // no migrar
     private int telefono;
     private boolean activo;
+    private LocalDate fechaRegistro; // no migrar
 
-    public Cliente(String nombre, int dni, int telefono) {
+    public Cliente(String nombre, String apellido1, String apellido2, int dni, int telefono) {
         this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
         this.dni = dni;
         this.fechaRegistro = LocalDate.now();
         this.activo = true;
@@ -37,6 +41,14 @@ public class Cliente {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public String getApellido1() { return apellido1;}
+
+    public void setApellido1(String apellido1) { this.apellido1 = apellido1;}
+
+    public String getApellido2() {return apellido2;}
+
+    public void setApellido2(String apellido2) {this.apellido2 = apellido2;}
 
     public int getDni() {
         return dni;
@@ -68,5 +80,12 @@ public class Cliente {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    @Override
+    public String toString() {
+        return  "["+ idCliente + "] " + nombre + " " + apellido1 + " " + apellido2 +
+                "\n DNI: " + dni + " - Tlf: " + telefono +
+                "\n Activo: " + activo + " - FechaRegistro: " + fechaRegistro;
     }
 }
