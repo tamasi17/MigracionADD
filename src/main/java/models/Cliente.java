@@ -14,8 +14,17 @@ public class Cliente {
     private int dni;
     private int telefono;
     private boolean activo;
+    private boolean migrado;
     private LocalDate fechaRegistro; // no migrar
 
+    /**
+     * Constructor Cliente para prac2
+     * @param nombre
+     * @param apellido1
+     * @param apellido2
+     * @param dni
+     * @param telefono
+     */
     public Cliente(String nombre, String apellido1, String apellido2, int dni, int telefono) {
         this.nombre = nombre;
         this.apellido1 = apellido1;
@@ -25,6 +34,24 @@ public class Cliente {
         this.activo = true;
         this.telefono = telefono;
     }
+
+    /**
+     * Constructor Cliente para prac2migra
+     * @param nombre
+     * @param apellido1
+     * @param dni
+     * @param telefono
+     */
+    public Cliente(String nombre, String apellido1, int dni, int telefono, boolean activo) {
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.dni = dni;
+        this.telefono = telefono;
+        this.activo = activo;
+        this.migrado = true;
+    }
+
+
 
     public int getIdCliente() {
         return idCliente;
@@ -82,10 +109,25 @@ public class Cliente {
         this.activo = activo;
     }
 
+    public boolean isMigrado() {
+        return migrado;
+    }
+
+    public void setMigrado(boolean migrado) {
+        this.migrado = migrado;
+    }
+
     @Override
     public String toString() {
         return  "["+ idCliente + "] " + nombre + " " + apellido1 + " " + apellido2 +
                 "\n DNI: " + dni + " - Tlf: " + telefono +
                 "\n Activo: " + activo + " - FechaRegistro: " + fechaRegistro;
     }
+
+    public String toStringMigra() {
+        return  "["+ idCliente + "] " + nombre + " " + apellido1 +
+                "\n DNI: " + dni + " - Tlf: " + telefono +
+                "\n Activo: " + activo + " - Migrado: " + migrado;
+    }
+
 }
