@@ -27,6 +27,7 @@ public class DatabaseSetup {
              Statement statement = connection.createStatement();){
 
             statement.executeUpdate(sql);
+
             getLogger().info("Tabla "+ tabla +" eliminada correctamente.");
 
         } catch (SQLException sqle) {

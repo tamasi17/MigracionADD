@@ -9,7 +9,6 @@ public interface Dao<T> {
     void insertMany(List<T> entity);
     void updateOne(T entity);
     void deleteById (int id);
-    boolean exists(T entity);
+    boolean exists(int id);
     List<T> findAll();
-    List<T> findByAttribute(T filtro);
 }

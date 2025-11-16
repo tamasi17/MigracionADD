@@ -1,7 +1,7 @@
 package main.java.v1;
 
 import log4Mats.LogLevel;
-import main.java.dao.Dao;
+import main.java.dao.DaoClientes;
 import main.java.models.Cliente;
 import main.java.utils.ConnectionFactory;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 import static main.java.logging.LoggerProvider.getLogger;
 
-public class DaoCliente_v1 implements Dao<Cliente> {
+public class DaoClienteV1 implements DaoClientes<Cliente> {
 
     @Override
     public Cliente get(int id) {
@@ -20,7 +20,7 @@ public class DaoCliente_v1 implements Dao<Cliente> {
 
         Cliente cliente = null;
 
-        try(Connection connection = ConnectionFactory.getConnectionDmOriginal()) {
+        try (Connection connection = ConnectionFactory.getConnectionDmOriginal()) {
 
             PreparedStatement ps = connection.prepareStatement(sql);
 
@@ -29,19 +29,19 @@ public class DaoCliente_v1 implements Dao<Cliente> {
             // El result set sale directamente de la query, no funciona con executeUpdate!
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()){ // Obligatorio mover el cursor!
+            if (rs.next()) { // Obligatorio mover el cursor!
 
-            cliente = new Cliente(
-                    rs.getString("nombre"),
-                    rs.getString("apellido1"),
-                    rs.getString("apellido2"),
-                    rs.getInt("dni"),
-                    rs.getInt("telefono"));
-                    cliente.setIdCliente(rs.getInt(1)); // recuerda asignar id al crear!
+                cliente = new Cliente(
+                        rs.getString("nombre"),
+                        rs.getString("apellido1"),
+                        rs.getString("apellido2"),
+                        rs.getInt("dni"),
+                        rs.getInt("telefono"));
+                cliente.setIdCliente(rs.getInt(1)); // recuerda asignar id al crear!
             }
 
         } catch (SQLException sqle) {
-            getLogger().error("Error recogiendo informacion de cliente "+id);
+            getLogger().error("Error recogiendo informacion de cliente " + id);
             System.err.println(sqle.getLocalizedMessage());
         }
 
@@ -161,8 +161,28 @@ public class DaoCliente_v1 implements Dao<Cliente> {
     }
 
     @Override
-    public boolean exists(Cliente c) {
-        return false;
+    public boolean exists(int id) {
+        String sql = "SELECT 1 FROM clientes WHERE idCliente = ?";
+
+        try (Connection connection = ConnectionFactory.getConnectionDmOriginal()) {
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ps.setInt(1, id);
+
+            // El result set sale directamente de la query, no funciona con executeUpdate!
+            ResultSet rs = ps.executeQuery();
+
+            // Si hay info, rs.next devuelve true, si no, no.
+            if (rs.next()) { return true;}
+
+        } catch (SQLException sqle) {
+            getLogger().error("Error confirmando si existe cliente " + id);
+            System.err.println(sqle.getLocalizedMessage());
+        }
+
+        // Si ha llegado aqui es porque no hay info, exists=false.
+         return false;
     }
 
     public List<Cliente> findAll() {
@@ -170,18 +190,21 @@ public class DaoCliente_v1 implements Dao<Cliente> {
         List<Cliente> clientes = new ArrayList<>();
 
         try (Connection conn = ConnectionFactory.getConnectionDmOriginal()) {
-            String sql = "SELECT * FROM usuarios";
+            String sql = "SELECT * FROM clientes";
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(sql);
 
-//            while (rs.next()) {
-//                Cliente c = new Cliente(rs.getString("nombre"),
-//                        rs.getInt("dni"),
-//                        rs.getInt("telefono"));
-//                c.setDni(rs.getInt("id")); // ESTO NO - HAY QUE CONSEGUIR LA GENERATED KEY
-//
-//                clientes.add(c);
-//            }
+            while (rs.next()) {
+                Cliente c = new Cliente(
+                        rs.getString("nombre"),
+                        rs.getString("apellido1"),
+                        rs.getString("apellido2"),
+                        rs.getInt("dni"),
+                        rs.getInt("telefono"));
+                c.setIdCliente(rs.getInt(1));
+
+                clientes.add(c);
+            }
 
         } catch (SQLException sqle) {
             getLogger().log(LogLevel.ERROR, "Connection(DriverM) not established when listing Clientes");
@@ -192,8 +215,35 @@ public class DaoCliente_v1 implements Dao<Cliente> {
     }
 
     @Override
-    public List<Cliente> findByAttribute(Cliente filtro) {
-        return List.of();
+    public List<Cliente> findByAttributes(String nombre, String apellido1) {
+        String sql = "SELECT * FROM clientes WHERE nombre = ? AND apellido1 = ?";
+
+        List<Cliente> encontrados = new ArrayList<>();
+
+        try (Connection connection = ConnectionFactory.getConnectionDmOriginal()){
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, nombre);
+            ps.setString(2, apellido1);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                Cliente c = new Cliente(
+                        rs.getString("nombre"),
+                        rs.getString("apellido1"),
+                        rs.getString("apellido2"),
+                        rs.getInt("dni"),
+                        rs.getInt("telefono"));
+                c.setIdCliente(rs.getInt(1));
+
+                encontrados.add(c);
+            }
+        } catch (SQLException sqle) {
+            getLogger().error("No se ha podido encontrar según: "+ nombre +" y "+ apellido1);
+            System.err.println(sqle.getLocalizedMessage());
+        }
+
+        return encontrados;
     }
 
 

@@ -1,16 +1,13 @@
 package main.java.v1;
 
 
-import log4Mats.LogLevel;
-import log4Mats.LogManager;
 import log4Mats.Logger;
 import main.java.logging.LoggerProvider;
 import main.java.utils.DatabaseSetup;
 
-import java.io.File;
 import java.sql.SQLException;
 
-public class Main_v1 {
+public class MainV1 {
 
         static final Logger LOGGER = LoggerProvider.getLogger();
 
