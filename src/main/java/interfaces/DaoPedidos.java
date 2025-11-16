@@ -1,6 +1,5 @@
-package main.java.dao;
+package main.java.interfaces;
 
-import main.java.models.Cliente;
 import main.java.models.EstadoPedido;
 import main.java.models.Pedido;
 

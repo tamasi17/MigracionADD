@@ -1,6 +1,0 @@
-[1] [2025-11-16_17-16-26_500] [INFO] [main.java.utils.DatabaseSetup.borrarTabla]: Tabla clientes eliminada correctamente.
-[2] [2025-11-16_17-16-26_545] [INFO] [main.java.utils.DatabaseSetup.crearTablaClientes]: Tabla clientes creada correctamente
-[1] [2025-11-16_17-17-19_026] [INFO] [main.java.utils.DatabaseSetup.borrarTabla]: Tabla clientes eliminada correctamente.
-[2] [2025-11-16_17-17-19_069] [INFO] [main.java.utils.DatabaseSetup.crearTablaClientes]: Tabla clientes creada correctamente
-[1] [2025-11-16_17-17-49_551] [INFO] [main.java.utils.DatabaseSetup.borrarTabla]: Tabla clientes eliminada correctamente.
-[2] [2025-11-16_17-17-49_598] [INFO] [main.java.utils.DatabaseSetup.crearTablaClientes]: Tabla clientes creada correctamente

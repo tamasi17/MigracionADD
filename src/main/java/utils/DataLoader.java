@@ -1,6 +1,7 @@
-package main.java.v1;
+package main.java.utils;
 
 import main.java.models.Cliente;
+import main.java.v1.DaoClienteV1;
 
 import java.util.ArrayList;
 import java.util.List;
