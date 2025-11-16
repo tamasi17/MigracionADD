@@ -15,7 +15,37 @@ public class DaoCliente_v1 implements Dao<Cliente> {
 
     @Override
     public Cliente get(int id) {
-        return null;
+
+        String sql = "SELECT * FROM clientes WHERE idCliente = ?";
+
+        Cliente cliente = null;
+
+        try(Connection connection = ConnectionFactory.getConnectionDmOriginal()) {
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ps.setInt(1, id);
+
+            // El result set sale directamente de la query, no funciona con executeUpdate!
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()){ // Obligatorio mover el cursor!
+
+            cliente = new Cliente(
+                    rs.getString("nombre"),
+                    rs.getString("apellido1"),
+                    rs.getString("apellido2"),
+                    rs.getInt("dni"),
+                    rs.getInt("telefono"));
+                    cliente.setIdCliente(rs.getInt(1)); // recuerda asignar id al crear!
+            }
+
+        } catch (SQLException sqle) {
+            getLogger().error("Error recogiendo informacion de cliente "+id);
+            System.err.println(sqle.getLocalizedMessage());
+        }
+
+        return cliente;
     }
 
 
@@ -37,11 +67,11 @@ public class DaoCliente_v1 implements Dao<Cliente> {
             ps.executeUpdate();
 
             // Result set con las columnas auto-incrementadas
-            ResultSet keys = ps.getGeneratedKeys();
+            ResultSet key = ps.getGeneratedKeys();
 
             // La primera (y normalmente la unica) clave generada --> id de cliente
-            if (keys.next()) {
-                c.setIdCliente(keys.getInt(1));
+            if (key.next()) {
+                c.setIdCliente(key.getInt(1));
             }
 
         } catch (SQLException sqle) {
@@ -77,7 +107,7 @@ public class DaoCliente_v1 implements Dao<Cliente> {
             ResultSet keys = ps.getGeneratedKeys();
 
             // Asignamos id a cada cliente (cuidado: SQL empieza keys en 1, no en 0 !!)
-            int i = 1;
+            int i = 0;
             while (i < entity.size() && keys.next()) {
                 entity.get(i).setIdCliente(keys.getInt(1));
                 i++;
@@ -94,22 +124,30 @@ public class DaoCliente_v1 implements Dao<Cliente> {
     }
 
     @Override
-    public void update(Cliente c) {
+    public void updateOne(Cliente c) {
 
+        // Recuerda cerrar comilla simple
+        String sql = "UPDATE clientes SET nombre = '" + c.getNombre() + "', " +
+                " apellido1 = '" + c.getApellido1() + "', " +
+                " apellido2 = '" + c.getApellido2() + "', " +
+                " telefono = " + c.getTelefono() + ", " +
+                " activo = " + c.isActivo() +
+                " WHERE idCliente = " + c.getIdCliente() + ";";
 
-        String sql = "";
-
-        /*
-        UPDATE clientes
-        SET nombre = 'Juan Pérez',
-        telefono = 555123456,
-        activo = 1
-        WHERE id_cliente = 10;
-         */
+        // Comprobamos query
+//        System.out.println(sql);
 
         try (Connection connection = ConnectionFactory.getConnectionDmOriginal()) {
 
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = connection.prepareStatement(sql);
+            int rows = ps.executeUpdate();
+
+            // ps.executeUpdate devuelve el numero de filas afectadas
+            if (rows > 0) {
+                getLogger().trace("[" + c.getIdCliente() + "] Cliente actualizado.");
+            } else {
+                getLogger().warn("Cliente no actualizado, check ID: " + c.getIdCliente());
+            }
 
 
         } catch (SQLException e) {
