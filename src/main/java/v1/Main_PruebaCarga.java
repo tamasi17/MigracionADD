@@ -5,10 +5,13 @@ import log4Mats.Logger;
 import main.java.logging.LoggerProvider;
 import main.java.models.Cliente;
 import main.java.utils.ConnectionFactory;
-import main.java.utils.DatabaseSetup;
+import main.java.utils.DataLoader;
+import main.java.utils.DbSetup;
+import main.java.utils.JdbcMigrator;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,117 +19,99 @@ public class Main_PruebaCarga {
 
     static final Logger LOGGER = LoggerProvider.getLogger();
 
+    static final int CANTIDAD_CLIENTES = 12;
+    static final int CANTIDAD_PEDIDOS = 70;
+    static final int CANTIDAD_PRODUCTOS = 50;
+
+    /**
+        Primero drop de todas las tablas para empezar de cero
+        DDL: Crear modelos bases de datos prac2 y prac2migra
+        Carga masiva datos en prac2
+        DML: Cambia datos, probar CRUD operations
+        Migracion datos prac2 a prac2 migra
+        Resultado en un fichero.
+        */
     public static void main(String[] args) {
 
 
-        /*
-         Primero drop todas las tablas para empezar de cero
-         DDL: Crear modelos bases de datos prac2 y prac2migra
-         Carga masiva datos en prac2
-         DML: Logica de negocio cambia datos
-         Migracion datos prac2 a prac2 migra
-         Resultado en un fichero.
-         */
 
         LOGGER.setLogToConsole(true);
 
+        /* En el workbench:
+        CREATE DATABASE prac2;
+        CREATE DATABASE prac2migra;
+         */
+
+
         // Borramos tablas
-        DatabaseSetup.borrarTabla("clientes");
+            DbSetup.borrarTabla("clientes");
+            DbSetup.borrarTablaMigrada("clientesMigra");
 
         // Creamos tablas
         try {
-            DatabaseSetup.crearTablaClientes();
+            DbSetup.crearTablaClientes();
+            DbSetup.crearTablaClientesMigrada();
         } catch (SQLException sqle) {
-            LOGGER.error("Error generando la tabla clientes");
+            LOGGER.error("Error generando las tablas de clientes");
             sqle.getLocalizedMessage();
-        }
-
-        int size = 7;
-        List<Cliente> clientes = new ArrayList<>();
-        for (int i = 1; i <= size; i++) {
-            clientes.add(new Cliente("nombre" + i,
-                    "apellido1." + i,
-                    "apellido2." + i,
-                    5100000 + i,
-                    1000000 + i));
         }
 
         // Recurrimos a DAOs para tratar la base de datos
         DaoClienteV1 daoClienteV1 = new DaoClienteV1();
 
-        // Insertamos batch
-        daoClienteV1.insertMany(clientes);
+        // Cargamos la tabla Clientes en prac2
+        try {
+            DataLoader.cargarClientes(daoClienteV1, CANTIDAD_CLIENTES);
+            LOGGER.info("Clientes cargados en prac2. Ejemplo: \n"+ daoClienteV1.get(3).toString());
+        } catch (SQLException e) {
+            LOGGER.warn("No se pudo cargar la tabla clientes en prac2");
+        }
 
-        // Insertamos un cliente
-        Cliente mats = new Cliente(
+        // Insertamos un cliente suelto
+        Cliente mister = new Cliente(
                 "Mati", "Eidelman", "Bokler",
                 67867867, 51090000);
-        daoClienteV1.insertOne(mats);
+        daoClienteV1.insertOne(mister);
 
-
-        // Confirmamos que hemos recuperado generated keys correctamente
-        for (Cliente cliente : clientes) {
-            System.out.println(cliente.toString());
-        }
-        System.out.println(mats);
-
-        // cliente exists?
-        System.out.println("Mats existe: " + daoClienteV1.exists(mats.getIdCliente()));
-
+        // Cliente exists?
+        LOGGER.trace("Comprobamos si Cliente suelto existe: " + daoClienteV1.exists(mister.getIdCliente()));
 
         // Update cliente
-        mats.setNombre("Matthew");
-        mats.setApellido1("Fernandez");
-        mats.setApellido2("Lopez");
-        daoClienteV1.updateOne(mats);
-        System.out.println("After update:\n" + daoClienteV1.get(8));
+        mister.setNombre("Juan Manuel");
+        mister.setApellido1("Fernandez");
+        mister.setApellido2("Lopez");
+        daoClienteV1.updateOne(mister);
+        LOGGER.trace("Cliente despues de update:\n" + daoClienteV1.get(8));
 
         // Find all
         List<Cliente> encontrados = daoClienteV1.findAll();
-        System.out.println("Usando findAll():\n" + encontrados.get(5)); // devolvera el cliente con idCliente 6.
+        LOGGER.trace("Usando findAll():\n" + encontrados.get(5)); // devolverá el cliente con idCliente 6.
 
         // Find by attributes (nombre y apellido)
-        encontrados = daoClienteV1.findByAttributes("Matthew", "Fernandez");
-        System.out.println("\nUsando findByAttributes:\n" + encontrados);
+        encontrados = daoClienteV1.findByAttributes("Juan Manuel", "Fernandez");
+        LOGGER.trace("\nUsando findByAttributes:\n" + encontrados);
 
-        // DeleteById
-        int idBorrado = 3;
+        // DeleteById -- comentando estas líneas se puede ver el cliente suelto.
+        int idBorrado = CANTIDAD_CLIENTES+1; // borro el cliente suelto
         daoClienteV1.deleteById(idBorrado);
-        System.out.println("Existe el cliente " + idBorrado + "? " + daoClienteV1.exists(idBorrado));
+        LOGGER.trace("\nBorrando...\n" +
+                "Existe el cliente " + idBorrado + "? " + daoClienteV1.exists(idBorrado));
 
 
+        // Nos preparamos para migracion
+        LOGGER.info("Clientes en prac2 antes de migracion: "+ daoClienteV1.findAll().size());
 
 
+        // ===============  MIGRACION ===============
 
+            LOGGER.trace("Creamos migrador con JDBC");
+            JdbcMigrator migrator = new JdbcMigrator();
+            migrator.migrarDB();
 
+        LOGGER.info("Clientes en prac2migra después de migracion: "+ daoClienteV1.findAllMigra().size());
 
-        /*
-          // int size; cantidad de clientes
-        // for() hasta size creando lista de clientes
-        // crea otro cliente suelto para probar el insertOne
-
-        //introducimos clientes
-        // new clienteDao
-        // clienteDao.insertMany(listaClientes)
-        // clienteDao.insertOne(clienteSuelto)
-
-        // same para pedidos y productos
-
-        // comprueba datos estan bien, logica de negocio aqui,
-        // se hace bien en mainEntregable
-
-        // try (connection de Origen y connection de Destino)
-
-        // clienteDAO y clienteDAO migrado
-
-        // lista<ClienteOrigen> = clienteDao.findAll
-        // lista<ClienteMigrado> = new ArrayList
-
-        // for (client : listaClienteOrigen)
-        //      listaClienteMigrado.add(new ClienteMigrado(0, client.getNombre, client.getApellido, etc)
-        // clienteMigradoDao.insertMany(listaClienteMigrado)
-
-         */
+        System.out.println("Mostramos uno cualquiera: \n"
+                + daoClienteV1.getMigra(4).toStringMigra());
 
 
     }
