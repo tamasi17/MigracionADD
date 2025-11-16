@@ -32,6 +32,7 @@ public class Main_PruebaCarga {
 
         try (Connection c = ConnectionFactory.getConnectionDmOriginal()) {
 
+            DatabaseSetup.borrarTabla("clientes");
 
             // Creamos tablas
             try {
@@ -41,9 +42,9 @@ public class Main_PruebaCarga {
                 sqle.getLocalizedMessage();
             }
 
-            int size = 10;
+            int size = 7;
             List<Cliente> clientes = new ArrayList<>();
-            for (int i = 0; i < size; i++) {
+            for (int i = 1; i <= size; i++) {
                 clientes.add(new Cliente("nombre" + i,
                         "apellido1." + i,
                         "apellido2." + i,
@@ -63,11 +64,21 @@ public class Main_PruebaCarga {
                     67867867, 51090000);
             daoClienteV1.insertOne(mats);
 
+
             // Confirmamos que hemos recuperado generated keys correctamente
             for (Cliente cliente : clientes) {
                 System.out.println(cliente.toString());
             }
             System.out.println(mats);
+
+            // Update cliente
+            mats.setNombre("Matthew");
+            mats.setApellido1("Eid");
+            mats.setApellido2("Bok");
+
+            daoClienteV1.updateOne(mats);
+
+            System.out.println("After update:\n"+ daoClienteV1.get(8));
 
         } catch (SQLException sqle) {
             LOGGER.error("Error inserting Clientes batch");
