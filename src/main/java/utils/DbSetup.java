@@ -20,7 +20,7 @@ public class DbSetup {
             throw new IllegalArgumentException(tabla + "no es un argumento valido.");
         }
 
-        String sql = "DROP TABLE "+ tabla+ ";";
+        String sql = "DROP TABLE "+ tabla + ";";
 
         try (Connection connection = ConnectionFactory.getConnectionDmOriginal();
              Statement statement = connection.createStatement();){
@@ -119,21 +119,78 @@ public class DbSetup {
     }
 
 
+    public static void crearTablaProductos() throws SQLException {
+
+        String sql = """
+                CREATE TABLE IF NOT EXISTS productos (
+                    idProducto INT AUTO_INCREMENT PRIMARY KEY,
+                    nombre VARCHAR(100) NOT NULL,
+                    descripcion VARCHAR(255),
+                    precio DECIMAL(10,2) NOT NULL,
+                    disponible BOOLEAN NOT NULL DEFAULT TRUE
+                );
+                """;
+
+        try(Connection connection = ConnectionFactory.getConnectionDmOriginal()){
+
+            Statement st = connection.createStatement();
+            st.execute(sql);
+
+            getLogger().info("Tabla productos creada correctamente");
+
+        } catch (SQLException sqle) {
+            throw new SQLException("No se pudo crear la tabla productos");
+        }
+    }
+
+    public static void crearTablaProductosMigrada() throws SQLException {
+
+        String sql = """
+                CREATE TABLE IF NOT EXISTS productosMigra (
+                    idProducto_migra INT AUTO_INCREMENT PRIMARY KEY,
+                    nombre_migra VARCHAR(100) NOT NULL,
+                    descripcion_migra VARCHAR(255),
+                    precio_migra DECIMAL(10,2) NOT NULL,
+                    disponible_migra BOOLEAN NOT NULL DEFAULT TRUE,
+                    migrado BOOLEAN NOT NULL DEFAULT TRUE
+                );
+                """;
+
+        try(Connection connection = ConnectionFactory.getConnectionDmMigrada()){
+
+            Statement st = connection.createStatement();
+            st.execute(sql);
+
+            getLogger().info("Tabla productosMigra creada correctamente");
+
+        } catch (SQLException sqle) {
+            throw new SQLException("No se pudo crear la tabla productosMigra");
+        }
+    }
 
 
-
-    // SIN TERMINAR
     public static void crearTablaPedidos() throws SQLException {
 
         String sql = """
                 CREATE TABLE IF NOT EXISTS pedidos (
-                    idCliente INT AUTO_INCREMENT PRIMARY KEY,
-                    nombre VARCHAR(100) NOT NULL,
-                    telefono BIGINT,
-                    activo BOOLEAN NOT NULL,
-                    fecha_registro DATE
-                )
+                    idPedido INT AUTO_INCREMENT PRIMARY KEY,
+                    fecha DATE NOT NULL,
+                    descripcion VARCHAR(255),
+                    clienteId INT NOT NULL,
+                    CONSTRAINT fk_pedido_cliente
+                        FOREIGN KEY (clienteId)
+                        REFERENCES clientes(idCliente)
+                        ON UPDATE CASCADE
+                        ON DELETE CASCADE,
+                    productoId INT NOT NULL,
+                    CONSTRAINT fk_pedido_producto
+                        FOREIGN KEY (productoId)
+                        REFERENCES productos(idProducto)
+                        ON UPDATE CASCADE
+                        ON DELETE RESTRICT
+                );
                 """;
+
         try(Connection connection = ConnectionFactory.getConnectionDmOriginal()){
 
             Statement st = connection.createStatement();
@@ -142,12 +199,44 @@ public class DbSetup {
             getLogger().info("Tabla pedidos creada correctamente");
 
         } catch (SQLException sqle) {
-            throw new SQLException("No se pudo crear la tabla clientes");
+            throw new SQLException("No se pudo crear la tabla pedidos");
         }
-
     }
 
 
+    public static void crearTablaPedidosMigrada() throws SQLException {
+
+        String sql = """
+                CREATE TABLE IF NOT EXISTS pedidosMigra (
+                    idPedido_migra INT AUTO_INCREMENT PRIMARY KEY,
+                    fecha_migra DATE NOT NULL,
+                    descripcion_migra VARCHAR(255),
+                    clienteId_migra INT NOT NULL,
+                    CONSTRAINT fk_pedido_cliente
+                        FOREIGN KEY (clienteId_migra)
+                        REFERENCES clientesMigra(idCliente_migra)
+                        ON UPDATE CASCADE
+                        ON DELETE CASCADE,
+                    productoId_migra INT NOT NULL,
+                    CONSTRAINT fk_pedido_producto
+                        FOREIGN KEY (productoId_migra)
+                        REFERENCES productosMigra(idProducto_migra)
+                        ON UPDATE CASCADE
+                        ON DELETE RESTRICT
+                );
+                """;
+
+        try(Connection connection = ConnectionFactory.getConnectionDmMigrada()){
+
+            Statement st = connection.createStatement();
+            st.execute(sql);
+
+            getLogger().info("Tabla pedidosMigra creada correctamente");
+
+        } catch (SQLException sqle) {
+            throw new SQLException("No se pudo crear la tabla pedidosMigra");
+        }
+    }
 
 
 }

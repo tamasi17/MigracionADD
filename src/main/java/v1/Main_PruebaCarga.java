@@ -43,16 +43,18 @@ public class Main_PruebaCarga {
          */
 
 
-        // Borramos tablas
-            DbSetup.borrarTabla("clientes");
-            DbSetup.borrarTablaMigrada("clientesMigra");
+        borrarTablas();
 
         // Creamos tablas
         try {
             DbSetup.crearTablaClientes();
             DbSetup.crearTablaClientesMigrada();
+            DbSetup.crearTablaProductos();
+            DbSetup.crearTablaProductosMigrada();
+            DbSetup.crearTablaPedidos();
+            DbSetup.crearTablaPedidosMigrada();
         } catch (SQLException sqle) {
-            LOGGER.error("Error generando las tablas de clientes");
+            LOGGER.error("Error generando las tablas");
             sqle.getLocalizedMessage();
         }
 
@@ -114,5 +116,15 @@ public class Main_PruebaCarga {
                 + daoClienteV1.getMigra(4).toStringMigra());
 
 
+    }
+
+    private static void borrarTablas() {
+        // Borramos tablas
+        DbSetup.borrarTabla("clientes");
+        DbSetup.borrarTablaMigrada("clientesMigra");
+        DbSetup.borrarTabla("productos");
+        DbSetup.borrarTablaMigrada("productosMigra");
+        DbSetup.borrarTabla("pedidos");
+        DbSetup.borrarTablaMigrada("pedidosMigra");
     }
 }

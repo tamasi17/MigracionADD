@@ -1,0 +1,23 @@
+[17] [2025-11-17_15-23-27_762] [WARN] [main.java.v1.DaoClienteV1.updateOne]: Cliente no actualizado, check ID: 0
+[18] [2025-11-17_15-23-27_768] [TRACE] [main.java.v1.Main_PruebaCarga.main]: Cliente despues de update:
+[8] nombre8 apellido1.8 apellido2.8
+ DNI: 5100008 - Tlf: 1000008
+ Activo: true - FechaRegistro: 2025-11-17
+[19] [2025-11-17_15-23-27_774] [TRACE] [main.java.v1.Main_PruebaCarga.main]: Usando findAll():
+[6] nombre6 apellido1.6 apellido2.6
+ DNI: 5100006 - Tlf: 1000006
+ Activo: true - FechaRegistro: 2025-11-17
+[20] [2025-11-17_15-23-27_779] [TRACE] [main.java.v1.Main_PruebaCarga.main]: 
+Usando findByAttributes:
+[[26] Juan Manuel Fernandez Lopez
+ DNI: 67867867 - Tlf: 51090000
+ Activo: true - FechaRegistro: 2025-11-17]
+[21] [2025-11-17_15-23-27_783] [WARN] [main.java.v1.DaoClienteV1.deleteById]: No se eliminó cliente 13
+[22] [2025-11-17_15-23-27_789] [TRACE] [main.java.v1.Main_PruebaCarga.main]: 
+Borrando...
+Existe el cliente 13? false
+[23] [2025-11-17_15-23-27_794] [INFO] [main.java.v1.Main_PruebaCarga.main]: Clientes en prac2 antes de migracion: 13
+[24] [2025-11-17_15-23-27_795] [TRACE] [main.java.v1.Main_PruebaCarga.main]: Creamos migrador con JDBC
+[25] [2025-11-17_15-23-27_812] [INFO] [main.java.utils.DbSetup.crearTablaClientesMigrada]: Tabla clientesMigra creada correctamente
+[26] [2025-11-17_15-23-27_825] [INFO] [main.java.utils.JdbcMigrator.migrarClientes]: [MIGRACION] clientes > COMPLETA(13/13 insertados, 0 errores) en 19 milisegundos.
+[27] [2025-11-17_15-23-27_832] [INFO] [main.java.v1.Main_PruebaCarga.main]: Clientes en prac2migra después de migracion: 13
