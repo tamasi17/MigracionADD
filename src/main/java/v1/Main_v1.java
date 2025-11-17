@@ -47,16 +47,22 @@ public class Main_v1 {
 
         // Recurrimos a DAOs para tratar la base de datos
         DaoClienteV1 daoClienteV1 = new DaoClienteV1();
+        DaoProductoV1 daoProductoV1 = new DaoProductoV1();
+//        DaoPedidoV1 daoPedidoV1 = new DaoPedidoV1();
 
         // Cargamos la tabla Clientes en prac2
         try {
             DataLoader.cargarClientes(daoClienteV1, CANTIDAD_CLIENTES);
+            DataLoader.cargarProductos(daoProductoV1, CANTIDAD_PRODUCTOS);
+//            DataLoader.cargarPedidos(daoPedidosV1, CANTIDAD_PEDIDOS);
 
             // continuar con productos y clientes !!!!
 
             LOGGER.info("Clientes cargados en prac2. Ejemplo: \n"+ daoClienteV1.get(3).toString());
+            LOGGER.info("Productos cargados en prac2. Ejemplo: \n"+ daoProductoV1.get(3).toString());
+//            LOGGER.info("Pedidos cargados en prac2. Ejemplo: \n"+ daoPedidoV1.get(3).toString());
         } catch (SQLException e) {
-            LOGGER.warn("No se pudo cargar la tabla clientes en prac2");
+            LOGGER.warn("No se pudieron cargar las tablas en prac2");
         }
 
         // Insertamos un cliente suelto

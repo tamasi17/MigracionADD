@@ -1,7 +1,9 @@
 package main.java.utils;
 
 import main.java.models.Cliente;
+import main.java.models.Producto;
 import main.java.v1.DaoClienteV1;
+import main.java.v1.DaoProductoV1;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -64,6 +66,27 @@ public class DataLoader {
         dao.loadMigra(migrados, connection);
 
         // Confirmamos que el batch se ha añadido bien en main con el logger
+
+    }
+
+
+    /**
+     * Metodo que carga clientes (formato prac2) con DriverManager (v1)
+     * @param dao
+     */
+    public static void cargarProductos(DaoProductoV1 dao, int size) throws SQLException {
+
+
+        List<Producto> productos = new ArrayList<>();
+        for (int i = 1; i <= size; i++) {
+            productos.add(new Producto("nombre" + i, "descripcion" + i, 10 + i));
+        }
+
+        // Insertamos batch
+        dao.insertMany(productos);
+
+        // Confirmamos que el batch se ha añadido bien
+        // y hemos recuperado generated keys correctamente con logger en el main.
 
     }
 

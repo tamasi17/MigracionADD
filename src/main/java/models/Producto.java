@@ -15,13 +15,11 @@ public class Producto {
 
     /**
      * Constructor para tabla original productos, asigna disponible = true.
-     * @param idProducto
      * @param nombre
      * @param descripcion
      * @param precio
      */
-    public Producto(int idProducto, String nombre, String descripcion, double precio) {
-        this.idProducto = idProducto;
+    public Producto(String nombre, String descripcion, double precio) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -30,14 +28,13 @@ public class Producto {
 
     /**
      * Constructor para tabla migrada, recibe disponible de la original, asigna migrado = true.
-     * @param idProducto
      * @param nombre
      * @param descripcion
      * @param precio
      * @param disponible
      */
-    public Producto(int idProducto, String nombre, String descripcion, double precio, boolean disponible) {
-        this.idProducto = idProducto;
+    public Producto( String nombre, String descripcion, double precio, boolean disponible) {
+
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
