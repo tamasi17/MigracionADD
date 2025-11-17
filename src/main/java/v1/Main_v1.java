@@ -4,18 +4,14 @@ package main.java.v1;
 import log4Mats.Logger;
 import main.java.logging.LoggerProvider;
 import main.java.models.Cliente;
-import main.java.utils.ConnectionFactory;
 import main.java.utils.DataLoader;
 import main.java.utils.DbSetup;
 import main.java.utils.JdbcMigrator;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
 import java.util.List;
 
-public class Main_PruebaCarga {
+public class Main_v1 {
 
     static final Logger LOGGER = LoggerProvider.getLogger();
 
@@ -40,23 +36,14 @@ public class Main_PruebaCarga {
         /* En el workbench:
         CREATE DATABASE prac2;
         CREATE DATABASE prac2migra;
+
+        CHECK : ConnectionFactory puerto 3306 o 3307
          */
 
 
         borrarTablas();
 
-        // Creamos tablas
-        try {
-            DbSetup.crearTablaClientes();
-            DbSetup.crearTablaClientesMigrada();
-            DbSetup.crearTablaProductos();
-            DbSetup.crearTablaProductosMigrada();
-            DbSetup.crearTablaPedidos();
-            DbSetup.crearTablaPedidosMigrada();
-        } catch (SQLException sqle) {
-            LOGGER.error("Error generando las tablas");
-            sqle.getLocalizedMessage();
-        }
+        crearTablas();
 
         // Recurrimos a DAOs para tratar la base de datos
         DaoClienteV1 daoClienteV1 = new DaoClienteV1();
@@ -64,6 +51,9 @@ public class Main_PruebaCarga {
         // Cargamos la tabla Clientes en prac2
         try {
             DataLoader.cargarClientes(daoClienteV1, CANTIDAD_CLIENTES);
+
+            // continuar con productos y clientes !!!!
+
             LOGGER.info("Clientes cargados en prac2. Ejemplo: \n"+ daoClienteV1.get(3).toString());
         } catch (SQLException e) {
             LOGGER.warn("No se pudo cargar la tabla clientes en prac2");
@@ -116,6 +106,21 @@ public class Main_PruebaCarga {
                 + daoClienteV1.getMigra(4).toStringMigra());
 
 
+    }
+
+    private static void crearTablas() {
+        // Creamos tablas
+        try {
+            DbSetup.crearTablaClientes();
+            DbSetup.crearTablaClientesMigrada();
+            DbSetup.crearTablaProductos();
+            DbSetup.crearTablaProductosMigrada();
+            DbSetup.crearTablaPedidos();
+            DbSetup.crearTablaPedidosMigrada();
+        } catch (SQLException sqle) {
+            LOGGER.error("Error generando las tablas");
+            sqle.getLocalizedMessage();
+        }
     }
 
     private static void borrarTablas() {
