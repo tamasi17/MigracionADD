@@ -6,7 +6,7 @@ public interface Dao<T> {
 
     T get(int id);
 
-    void insertOne(T entity);
+    int insertOne(T entity);
 
     void insertMany(List<T> entity);
 

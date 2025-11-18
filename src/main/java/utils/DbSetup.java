@@ -175,7 +175,7 @@ public class DbSetup {
                 CREATE TABLE IF NOT EXISTS pedidos (
                     idPedido INT AUTO_INCREMENT PRIMARY KEY,
                     fecha DATE NOT NULL,
-                    descripcion VARCHAR(255),
+                    precio DECIMAL(10,2) NOT NULL,
                     clienteId INT NOT NULL,
                     CONSTRAINT fk_pedido_cliente
                         FOREIGN KEY (clienteId)
@@ -210,7 +210,8 @@ public class DbSetup {
                 CREATE TABLE IF NOT EXISTS pedidosMigra (
                     idPedido_migra INT AUTO_INCREMENT PRIMARY KEY,
                     fecha_migra DATE NOT NULL,
-                    descripcion_migra VARCHAR(255),
+                    precio_migra DECIMAL(10,2) NOT NULL,
+                    migrado BOOLEAN NOT NULL DEFAULT TRUE,
                     clienteId_migra INT NOT NULL,
                     CONSTRAINT fk_pedido_cliente
                         FOREIGN KEY (clienteId_migra)

@@ -5,8 +5,7 @@ import main.java.models.Pedido;
 
 import java.util.List;
 
-public interface DaoPedidos<T> extends Dao<Pedido> {
+public interface DaoPedidos<Pedido> extends Dao<Pedido> {
 
-    List<T> findByAttributes(int idCliente, EstadoPedido estado);
-
+    List<Pedido> findByAttributes(int idCliente, Double precio);
 }

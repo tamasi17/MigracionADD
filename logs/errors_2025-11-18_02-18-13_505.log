@@ -1,0 +1,57 @@
+[39] [2025-11-18_02-18-02_960] [TRACE] [main.java.v1.Main_v1.main]: Creamos migrador con JDBC
+[40] [2025-11-18_02-18-02_967] [INFO] [main.java.utils.JdbcMigrator.migrarDB]: [MIGRACION] Savepoint: Clientes
+[41] [2025-11-18_02-18-02_981] [INFO] [main.java.utils.DbSetup.crearTablaClientesMigrada]: Tabla clientesMigra creada correctamente
+[42] [2025-11-18_02-18-02_987] [INFO] [main.java.utils.JdbcMigrator.migrarClientes]: Migracion clientes:COMPLETA
+[43] [2025-11-18_02-18-02_988] [INFO] [main.java.utils.JdbcMigrator.migrarDB]: [MIGRACION] Savepoint: Productos
+[44] [2025-11-18_02-18-02_995] [INFO] [main.java.utils.DbSetup.crearTablaProductosMigrada]: Tabla productosMigra creada correctamente
+[45] [2025-11-18_02-18-02_996] [TRACE] [main.java.utils.DataLoader.cargarProductosMigrada]: Cargando productosMigra. Prueba: nombre3
+[46] [2025-11-18_02-18-02_997] [TRACE] [main.java.utils.DataLoader.cargarProductosMigrada]: Preparado para loadProductosMigra. Prueba: nombre3
+[47] [2025-11-18_02-18-03_013] [TRACE] [main.java.utils.DataLoader.cargarProductosMigrada]: Load de productos finalizado
+[48] [2025-11-18_02-18-03_015] [INFO] [main.java.utils.JdbcMigrator.migrarProductos]: Migracion productos:COMPLETA
+[49] [2025-11-18_02-18-03_015] [INFO] [main.java.utils.JdbcMigrator.migrarDB]: [MIGRACION] Savepoint: Pedidos
+[50] [2025-11-18_02-18-03_023] [INFO] [main.java.utils.DbSetup.crearTablaPedidosMigrada]: Tabla pedidosMigra creada correctamente
+[51] [2025-11-18_02-18-03_024] [TRACE] [main.java.utils.DataLoader.cargarPedidosMigrada]: Cargando pedidos en pedidosMigra
+[52] [2025-11-18_02-18-03_043] [INFO] [main.java.utils.JdbcMigrator.migrarPedidos]: Migracion pedidos:COMPLETA
+[53] [2025-11-18_02-18-03_048] [INFO] [main.java.utils.JdbcMigrator.escribeResultado]: Resultado migración escrito en C:\Users\matei\CodingProjects\MigracionADD\migracion\resultadoMigracion.txt
+[54] [2025-11-18_02-18-03_048] [INFO] [main.java.v1.Main_v1.main]: [MIGRACION] [all] > COMPLETA(152/152 insertados, 0 errores) en 72 milisegundos.
+[1] [2025-11-18_02-18-13_102] [INFO] [main.java.utils.DbSetup.borrarTabla]: Tabla pedidos eliminada correctamente.
+[2] [2025-11-18_02-18-13_155] [INFO] [main.java.utils.DbSetup.borrarTablaMigrada]: Tabla pedidosMigra eliminada correctamente.
+[3] [2025-11-18_02-18-13_167] [INFO] [main.java.utils.DbSetup.borrarTabla]: Tabla clientes eliminada correctamente.
+[4] [2025-11-18_02-18-13_180] [INFO] [main.java.utils.DbSetup.borrarTablaMigrada]: Tabla clientesMigra eliminada correctamente.
+[5] [2025-11-18_02-18-13_192] [INFO] [main.java.utils.DbSetup.borrarTabla]: Tabla productos eliminada correctamente.
+[6] [2025-11-18_02-18-13_204] [INFO] [main.java.utils.DbSetup.borrarTablaMigrada]: Tabla productosMigra eliminada correctamente.
+[7] [2025-11-18_02-18-13_232] [INFO] [main.java.utils.DbSetup.crearTablaClientes]: Tabla clientes creada correctamente
+[8] [2025-11-18_02-18-13_254] [INFO] [main.java.utils.DbSetup.crearTablaClientesMigrada]: Tabla clientesMigra creada correctamente
+[9] [2025-11-18_02-18-13_267] [INFO] [main.java.utils.DbSetup.crearTablaProductos]: Tabla productos creada correctamente
+[10] [2025-11-18_02-18-13_282] [INFO] [main.java.utils.DbSetup.crearTablaProductosMigrada]: Tabla productosMigra creada correctamente
+[11] [2025-11-18_02-18-13_310] [INFO] [main.java.utils.DbSetup.crearTablaPedidos]: Tabla pedidos creada correctamente
+[12] [2025-11-18_02-18-13_342] [INFO] [main.java.utils.DbSetup.crearTablaPedidosMigrada]: Tabla pedidosMigra creada correctamente
+[13] [2025-11-18_02-18-13_449] [INFO] [main.java.v1.Main_v1.cargaMasivaDatos]: 
+Clientes cargados en prac2. Ejemplo: [3] nombre3 apellido1.3 apellido2.3
+ DNI: 5100003 - Tlf: 1000003
+ Activo: true - FechaRegistro: 2025-11-18
+[14] [2025-11-18_02-18-13_455] [INFO] [main.java.v1.Main_v1.cargaMasivaDatos]: 
+Productos cargados en prac2. Ejemplo: [3] nombre3
+descripcion3
+13.0 euros.
+Disponible: true - Migrado: false
+[15] [2025-11-18_02-18-13_463] [INFO] [main.java.v1.Main_v1.cargaMasivaDatos]: 
+Pedidos cargados en prac2. Ejemplo: [3] 2025-11-18
+13.0euros
+Cliente: 3Producto: 3
+[16] [2025-11-18_02-18-13_474] [TRACE] [main.java.v1.Main_v1.crudClientes]: Comprobamos si Cliente suelto existe: true
+[17] [2025-11-18_02-18-13_482] [TRACE] [main.java.v1.DaoClienteV1.updateOne]: [13] Cliente actualizado.
+[18] [2025-11-18_02-18-13_486] [TRACE] [main.java.v1.Main_v1.crudClientes]: Cliente despues de update:
+[13] Juan Manuel Fernandez Lopez
+ DNI: 67867867 - Tlf: 51090000
+ Activo: true - FechaRegistro: 2025-11-18
+[19] [2025-11-18_02-18-13_491] [TRACE] [main.java.v1.Main_v1.crudClientes]: Usando findAll():
+[6] nombre6 apellido1.6 apellido2.6
+ DNI: 5100006 - Tlf: 1000006
+ Activo: true - FechaRegistro: 2025-11-18
+[20] [2025-11-18_02-18-13_495] [TRACE] [main.java.v1.Main_v1.crudClientes]: 
+Usando findByAttributes:
+[[13] Juan Manuel Fernandez Lopez
+ DNI: 67867867 - Tlf: 51090000
+ Activo: true - FechaRegistro: 2025-11-18]
+[21] [2025-11-18_02-18-13_500] [TRACE] [main.java.v1.DaoClienteV1.deleteById]: Eliminado cliente 13

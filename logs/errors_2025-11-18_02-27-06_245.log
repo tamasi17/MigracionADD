@@ -1,0 +1,85 @@
+[54] [2025-11-18_02-22-44_032] [INFO] [main.java.v1.Main_v1.main]: [MIGRACION] [all] > COMPLETA(152/152 insertados, 0 errores) en 73 milisegundos.
+[1] [2025-11-18_02-27-05_751] [INFO] [main.java.utils.DbSetup.borrarTabla]: Tabla pedidos eliminada correctamente.
+[2] [2025-11-18_02-27-05_778] [INFO] [main.java.utils.DbSetup.borrarTablaMigrada]: Tabla pedidosMigra eliminada correctamente.
+[3] [2025-11-18_02-27-05_789] [INFO] [main.java.utils.DbSetup.borrarTabla]: Tabla clientes eliminada correctamente.
+[4] [2025-11-18_02-27-05_800] [INFO] [main.java.utils.DbSetup.borrarTablaMigrada]: Tabla clientesMigra eliminada correctamente.
+[5] [2025-11-18_02-27-05_811] [INFO] [main.java.utils.DbSetup.borrarTabla]: Tabla productos eliminada correctamente.
+[6] [2025-11-18_02-27-05_823] [INFO] [main.java.utils.DbSetup.borrarTablaMigrada]: Tabla productosMigra eliminada correctamente.
+[7] [2025-11-18_02-27-05_848] [INFO] [main.java.utils.DbSetup.crearTablaClientes]: Tabla clientes creada correctamente
+[8] [2025-11-18_02-27-05_878] [INFO] [main.java.utils.DbSetup.crearTablaClientesMigrada]: Tabla clientesMigra creada correctamente
+[9] [2025-11-18_02-27-05_893] [INFO] [main.java.utils.DbSetup.crearTablaProductos]: Tabla productos creada correctamente
+[10] [2025-11-18_02-27-05_910] [INFO] [main.java.utils.DbSetup.crearTablaProductosMigrada]: Tabla productosMigra creada correctamente
+[11] [2025-11-18_02-27-05_949] [INFO] [main.java.utils.DbSetup.crearTablaPedidos]: Tabla pedidos creada correctamente
+[12] [2025-11-18_02-27-05_985] [INFO] [main.java.utils.DbSetup.crearTablaPedidosMigrada]: Tabla pedidosMigra creada correctamente
+[13] [2025-11-18_02-27-06_102] [INFO] [main.java.v1.Main_v1.cargaMasivaDatos]: 
+Clientes cargados en prac2. Ejemplo: [3] nombre3 apellido1.3 apellido2.3
+ DNI: 5100003 - Tlf: 1000003
+ Activo: true - FechaRegistro: 2025-11-18
+[14] [2025-11-18_02-27-06_108] [INFO] [main.java.v1.Main_v1.cargaMasivaDatos]: 
+Productos cargados en prac2. Ejemplo: [3] nombre3
+descripcion3
+13.0 euros.
+Disponible: true - Migrado: false
+[15] [2025-11-18_02-27-06_114] [INFO] [main.java.v1.Main_v1.cargaMasivaDatos]: 
+Pedidos cargados en prac2. Ejemplo: [3] 2025-11-18
+13.0euros
+Cliente: 8Producto: 32
+[16] [2025-11-18_02-27-06_122] [TRACE] [main.java.v1.Main_v1.crudClientes]: Comprobamos si Cliente suelto existe: true
+[17] [2025-11-18_02-27-06_129] [TRACE] [main.java.v1.DaoClienteV1.updateOne]: [13] Cliente actualizado.
+[18] [2025-11-18_02-27-06_133] [TRACE] [main.java.v1.Main_v1.crudClientes]: Cliente despues de update:
+[13] Juan Manuel Fernandez Lopez
+ DNI: 67867867 - Tlf: 51090000
+ Activo: true - FechaRegistro: 2025-11-18
+[19] [2025-11-18_02-27-06_137] [TRACE] [main.java.v1.Main_v1.crudClientes]: Usando findAll():
+[6] nombre6 apellido1.6 apellido2.6
+ DNI: 5100006 - Tlf: 1000006
+ Activo: true - FechaRegistro: 2025-11-18
+[20] [2025-11-18_02-27-06_140] [TRACE] [main.java.v1.Main_v1.crudClientes]: 
+Usando findByAttributes:
+[[13] Juan Manuel Fernandez Lopez
+ DNI: 67867867 - Tlf: 51090000
+ Activo: true - FechaRegistro: 2025-11-18]
+[21] [2025-11-18_02-27-06_143] [TRACE] [main.java.v1.DaoClienteV1.deleteById]: Eliminado cliente 13
+[22] [2025-11-18_02-27-06_147] [TRACE] [main.java.v1.Main_v1.crudClientes]: 
+Borrando...
+Existe el cliente 13? false
+[23] [2025-11-18_02-27-06_155] [TRACE] [main.java.v1.Main_v1.crudProductos]: Comprobamos si prod existe: true
+[24] [2025-11-18_02-27-06_160] [TRACE] [main.java.v1.DaoProductoV1.updateOne]: [71] Producto actualizado.
+[25] [2025-11-18_02-27-06_163] [TRACE] [main.java.v1.Main_v1.crudProductos]: Producto despues de update:
+[71] Lancha
+Chiquita
+9999.9 euros.
+Disponible: true - Migrado: false
+[26] [2025-11-18_02-27-06_167] [TRACE] [main.java.v1.Main_v1.crudProductos]: Usando findAll():
+[6] nombre6
+descripcion6
+16.0 euros.
+Disponible: true - Migrado: true
+[27] [2025-11-18_02-27-06_169] [TRACE] [main.java.v1.Main_v1.crudProductos]: 
+Usando findByAttributes:
+[]
+[28] [2025-11-18_02-27-06_174] [TRACE] [main.java.v1.DaoProductoV1.deleteById]: Eliminado producto 71
+[29] [2025-11-18_02-27-06_177] [TRACE] [main.java.v1.Main_v1.crudProductos]: 
+Borrando...
+Existe el producto 71? false
+[30] [2025-11-18_02-27-06_184] [TRACE] [main.java.v1.Main_v1.crudPedidos]: Comprobamos si pedido existe: true
+[31] [2025-11-18_02-27-06_198] [ERROR] [main.java.v1.DaoPedidoV1.updateOne]: Could not update info of Pedido: 71
+[32] [2025-11-18_02-27-06_201] [TRACE] [main.java.v1.Main_v1.crudPedidos]: Pedido despues de update:
+[71] 2025-11-18
+2.387946298E7euros
+Cliente: 3Producto: 4
+[33] [2025-11-18_02-27-06_207] [TRACE] [main.java.v1.Main_v1.crudPedidos]: Usando findAll(), mostramos usuario 6:
+[6] 2025-11-18
+16.0euros
+Cliente: 3Producto: 37
+[34] [2025-11-18_02-27-06_212] [TRACE] [main.java.v1.Main_v1.crudPedidos]: 
+Usando findByAttributes:
+[]
+[35] [2025-11-18_02-27-06_216] [TRACE] [main.java.v1.DaoPedidoV1.deleteById]: Eliminado pedido 71
+[36] [2025-11-18_02-27-06_221] [TRACE] [main.java.v1.Main_v1.crudPedidos]: 
+Borrando...
+Existe el cliente 71? false
+[37] [2025-11-18_02-27-06_245] [INFO] [main.java.v1.Main_v1.main]: Clientes en prac2 antes de migracion: 12
+Productos en prac2 antes de migracion: 70
+Pedidos en prac2 antes de migracion: 70
+Total: 152

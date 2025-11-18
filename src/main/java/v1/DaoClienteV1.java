@@ -84,8 +84,9 @@ public class DaoClienteV1 implements DaoClientes<Cliente> {
 
     }
 
-    public void insertOne(Cliente c) {
+    public int insertOne(Cliente c) {
 
+        int id = 0;
         try (Connection connection = ConnectionFactory.getConnectionDmOriginal()) {
 
             String sql = "INSERT INTO clientes (nombre, apellido1, apellido2, dni, telefono) VALUES (?, ?, ?, ?, ?)";
@@ -106,13 +107,15 @@ public class DaoClienteV1 implements DaoClientes<Cliente> {
 
             // La primera (y normalmente la unica) clave generada --> id de cliente
             if (key.next()) {
-                c.setIdCliente(key.getInt(1));
+                id = key.getInt(1);
+                c.setIdCliente(id);
             }
 
         } catch (SQLException sqle) {
             getLogger().log(LogLevel.ERROR, "Connection(DriverM) not established when inserting Cliente");
             System.err.println(sqle.getLocalizedMessage());
         }
+        return id;
     }
 
     public void insertMany(List<Cliente> entity) {
@@ -314,22 +317,22 @@ public class DaoClienteV1 implements DaoClientes<Cliente> {
     }
 
 
-    public List<Cliente> findAllMigra() {
+    public List<Cliente> findAllMigra(Connection connection) {
 
         List<Cliente> clientes = new ArrayList<>();
 
-        try (Connection conn = ConnectionFactory.getConnectionDmOriginal()) {
-            String sql = "SELECT * FROM clientes";
-            Statement statement = conn.createStatement();
+        try {
+            String sql = "SELECT * FROM clientesMigra";
+            Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
 
             while (rs.next()) {
                 Cliente c = new Cliente(
-                        rs.getString("nombre"),
-                        rs.getString("apellido1"),
-                        rs.getInt("dni"),
-                        rs.getInt("telefono"),
-                        rs.getBoolean("activo"));
+                        rs.getString("nombre_migra"),
+                        rs.getString("apellido1_migra"),
+                        rs.getInt("dni_migra"),
+                        rs.getInt("telefono_migra"),
+                        rs.getBoolean("activo_migra"));
                 c.setIdCliente(rs.getInt(1));
 
                 clientes.add(c);
@@ -378,7 +381,7 @@ public class DaoClienteV1 implements DaoClientes<Cliente> {
     }
 
 
-    public void loadMigra(List<Cliente> entity, Connection connection) {
+    public void loadClientesMigra(List<Cliente> entity, Connection connection) {
 
         String sql = "INSERT INTO clientesMigra " +
                 "(nombre_migra, apellido1_migra, dni_migra, telefono_migra, activo_migra, migrado) " +

@@ -89,4 +89,12 @@ public class Producto {
     public void setMigrado(boolean migrado) {
         this.migrado = migrado;
     }
+
+    @Override
+    public String toString() {
+        return "[" + idProducto + "] " + nombre + "\n"
+                + descripcion + "\n"
+                + precio + " euros.\nDisponible: " + disponible +
+                " - Migrado: " + migrado;
+    }
 }
