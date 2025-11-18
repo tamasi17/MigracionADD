@@ -75,6 +75,6 @@ public class Pedido {
         return "["+ idPedido +"] " + fechaPedido +
                 "\n" + precio + "euros\n" +
                 "Cliente: "+ clienteId +
-                "Producto: "+ productoId;
+                " - Producto: "+ productoId;
     }
 }

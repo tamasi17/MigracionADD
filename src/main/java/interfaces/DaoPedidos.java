@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface DaoPedidos<Pedido> extends Dao<Pedido> {
 
-    List<Pedido> findByAttributes(int idCliente, Double precio);
+    List<Pedido> findByAttributes(int clienteId, int productoId);
 }

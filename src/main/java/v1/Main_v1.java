@@ -138,7 +138,7 @@ public class Main_v1 {
         LOGGER.trace("Usando findAll():\n" + encontrados.get(5)); // devolverá el prod con idProducto 6.
 
         // Find by attributes (nombre y apellido)
-        encontrados = daoProd.findByAttributes("Yate", 9999.9);
+        encontrados = daoProd.findByAttributes("Lancha", 9999.9);
         LOGGER.trace("\nUsando findByAttributes:\n" + encontrados);
 
         // DeleteById -- comentando estas líneas se puede ver el cliente suelto.
@@ -151,7 +151,7 @@ public class Main_v1 {
     private static void crudPedidos(DaoPedidoV1 daoPedidos) {
         // Insertamos un producto suelto y recuperamos su id
         Pedido pedido = new Pedido(
-                Date.valueOf(LocalDate.now()), 23879462.98,
+                Date.valueOf(LocalDate.now()), 239462.98,
                 3, 4);
         int id = daoPedidos.insertOne(pedido);
 
@@ -160,7 +160,7 @@ public class Main_v1 {
 
         // Update producto
         pedido.setClienteId(9);
-        pedido.setProductoId(99);
+        pedido.setProductoId(9);
         pedido.setPrecio(9999.9);
         daoPedidos.updateOne(pedido);
         LOGGER.trace("Pedido despues de update:\n" + daoPedidos.get(id));
@@ -169,12 +169,12 @@ public class Main_v1 {
         List<Pedido> encontrados = daoPedidos.findAll();
         LOGGER.trace("Usando findAll(), mostramos usuario 6:\n" + encontrados.get(5)); // devolverá el pedido con idPedido 6.
 
-        // Find by attributes (nombre y apellido)
-        encontrados = daoPedidos.findByAttributes(9, 9999.9);
+        // Find by attributes (clienteId y productoId)
+        encontrados = daoPedidos.findByAttributes(9, 9);
         LOGGER.trace("\nUsando findByAttributes:\n" + encontrados);
 
         // DeleteById -- comentando estas líneas se puede ver el pedido suelto.
-        daoPedidos.deleteById(id); // borro el pedido suelto
+//        daoPedidos.deleteById(id); // borro el pedido suelto
         LOGGER.trace("\nBorrando...\n" +
                 "Existe el cliente " + id + "? " + daoPedidos.exists(id));
 

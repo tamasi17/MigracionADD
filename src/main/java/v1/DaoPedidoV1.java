@@ -209,19 +209,23 @@ public class DaoPedidoV1 implements DaoPedidos<Pedido> {
 
     public void updateOne(Pedido p) {
 
-        // Recuerda cerrar comilla simple
-        String sql = "UPDATE pedidos SET fecha = '" + p.getFechaPedido() + "', " +
-                " precio = '" + p.getPrecio() + "', " +
-                " clienteId = '" + p.getClienteId() + "', " +
-                " productoId = " + p.getProductoId() +
-                " WHERE idPedido = " + p.getIdPedido() + ";";
+
+        String sql = "UPDATE pedidos SET fecha = ?, precio = ?, clienteId = ?, productoId = ? " +
+                "WHERE idPedido = ?";
 
         // Comprobamos query
-//        System.out.println(sql);
+        System.out.println(sql);
 
         try (Connection connection = ConnectionFactory.getConnectionDmOriginal()) {
 
             PreparedStatement ps = connection.prepareStatement(sql);
+
+            ps.setDate(1, java.sql.Date.valueOf(p.getFechaPedido().toLocalDate()));
+            ps.setDouble(2, p.getPrecio());
+            ps.setInt(3, p.getClienteId());
+            ps.setInt(4, p.getProductoId());
+            ps.setInt(5, p.getIdPedido());
+
             int rows = ps.executeUpdate();
 
             // ps.executeUpdate devuelve el numero de filas afectadas
@@ -232,8 +236,9 @@ public class DaoPedidoV1 implements DaoPedidos<Pedido> {
             }
 
 
-        } catch (SQLException e) {
-            getLogger().error("Could not update info of Pedido: " + p.getIdPedido());
+        } catch (SQLException sqle) {
+            getLogger().error("Could not update info of Pedido: "
+                    + p.getIdPedido() + "\n"+ sqle.getLocalizedMessage());
         }
     }
 
@@ -347,8 +352,8 @@ public class DaoPedidoV1 implements DaoPedidos<Pedido> {
 
 
 
-    public List<Pedido> findByAttributes(int clienteId, Double precio) {
-        String sql = "SELECT * FROM pedidos WHERE clienteId = ? AND precio = ?";
+    public List<Pedido> findByAttributes(int clienteId, int productoId) {
+        String sql = "SELECT * FROM pedidos WHERE clienteId = ? AND productoId = ?";
 
         List<Pedido> encontrados = new ArrayList<>();
 
@@ -356,7 +361,7 @@ public class DaoPedidoV1 implements DaoPedidos<Pedido> {
 
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, clienteId);
-            ps.setDouble(2, precio);
+            ps.setDouble(2, productoId);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()){
@@ -370,7 +375,7 @@ public class DaoPedidoV1 implements DaoPedidos<Pedido> {
                 encontrados.add(p);
             }
         } catch (SQLException sqle) {
-            getLogger().error("No se ha podido encontrar según: "+ clienteId +" y "+ precio);
+            getLogger().error("No se ha podido encontrar según: "+ clienteId +" y "+ productoId);
             System.err.println(sqle.getLocalizedMessage());
         }
 
