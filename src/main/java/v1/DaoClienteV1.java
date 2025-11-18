@@ -120,7 +120,7 @@ public class DaoClienteV1 implements DaoClientes<Cliente> {
 
     public void insertMany(List<Cliente> entity) {
 
-        String sql = "INSERT INTO clientes (nombre, apellido1, apellido2, dni, telefono, activo) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO clientes (nombre, apellido1, apellido2, dni, telefono, fecha_registro, activo) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getConnectionDmOriginal()) {
 
@@ -135,7 +135,8 @@ public class DaoClienteV1 implements DaoClientes<Cliente> {
                 ps.setString(3, cliente.getApellido2());
                 ps.setInt(4, cliente.getDni());
                 ps.setInt(5, cliente.getTelefono());
-                ps.setBoolean(6, true);
+                ps.setDate(6, Date.valueOf(cliente.getFechaRegistro()));
+                ps.setBoolean(7, true);
                 ps.addBatch();
             }
 

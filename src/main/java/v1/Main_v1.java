@@ -174,7 +174,7 @@ public class Main_v1 {
         LOGGER.trace("\nUsando findByAttributes:\n" + encontrados);
 
         // DeleteById -- comentando estas líneas se puede ver el pedido suelto.
-//        daoPedidos.deleteById(id); // borro el pedido suelto
+        daoPedidos.deleteById(id); // borro el pedido suelto
         LOGGER.trace("\nBorrando...\n" +
                 "Existe el cliente " + id + "? " + daoPedidos.exists(id));
 
