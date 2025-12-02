@@ -24,6 +24,7 @@ USE prac2;
 SHOW TABLES FROM prac2;
 SELECT * FROM productos;
 SELECT * FROM productos WHERE idProducto = 8;
+SELECT * FROM productos WHERE idProducto = 99;
 SELECT nombre, descripcion, precio FROM productos WHERE idProducto =8;
 DELETE FROM productos WHERE idProducto = 2;
 DROP TABLE productos;
@@ -40,19 +41,26 @@ DROP TABLE productosMigra;
 USE prac2;
 SHOW TABLES FROM prac2;
 SELECT * FROM pedidos;
-SELECT * FROM pedidos WHERE idPedido = 8;
+SELECT * FROM pedidos WHERE idPedido = 71;
 SELECT idPedido, clienteId, productoId FROM pedidos WHERE idPedido =8;
 DELETE FROM pedidos WHERE idPedido = 2;
-DROP TABLE productos;
+DROP TABLE pedidos;
 
 -- MIGRADA --
 USE prac2migra;
 SHOW TABLES FROM prac2migra;
-SELECT * FROM productosMigra;	
-SELECT * FROM productosMigra WHERE idProducto_migra = 4;
-SELECT nombre, apellido1 FROM productosMigra WHERE idProducto_migra =8;
-DROP TABLE productosMigra;
+SELECT * FROM pedidosMigra;	
+SELECT * FROM pedidosMigra WHERE idPedido_migra = 4;
+SELECT clienteId_migra, productoId_migra FROM pedidosMigra WHERE idPedido_migra =8;
+DROP TABLE pedidosMigra;
 
+-- VER TODO ---
+USE prac2;
+SELECT * FROM clientes;
+USE prac2migra;
+SELECT * FROM clientesMigra;
+SELECT * FROM productosMigra;
+SELECT * FROM pedidosMigra;
 -- RECUENTO --
 SELECT 'clientesMigra' AS tabla, COUNT(*) AS total FROM clientesMigra
 UNION ALL
